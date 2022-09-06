@@ -21,13 +21,10 @@ public class Calendar
         catch (System.FormatException)
         {
             Console.WriteLine("Please type a valid number.");
-            IsUserInputLeapYear();
         }
         catch (InvalidYearException1)
         {
             Console.WriteLine("Please type a year after 1582.");
-            IsUserInputLeapYear();
-
         }
 
     }

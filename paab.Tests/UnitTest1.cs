@@ -56,17 +56,35 @@ public class UnitTest1
     }
 
     [Fact]
-    public void IsUserInputLeapYear_ThrowsTypeConversionError_ForMads()
+    public void IsUserInputLeapYear_HandleFormatException_ForMads()
     {
         var sut = new Calendar();
         using var reader = new StringReader("mads\n");
         Console.SetIn(reader);
 
-        var conversionError = () => sut.IsUserInputLeapYear();
+        using var writer = new StringWriter();
+        Console.SetOut(writer);
 
-        conversionError.Should().Throw<System.FormatException>();
+        sut.IsUserInputLeapYear();
 
+        var output = writer.GetStringBuilder().ToString().TrimEnd();
+        output.Should().BeEquivalentTo("Please type a valid number.");
+    }
 
+    [Fact]
+    public void IsUserInputLeapYear_HandleInvalidYearException1_ForYearBefore1582()
+    {
+        var sut = new Calendar();
+        using var reader = new StringReader("1580\n");
+        Console.SetIn(reader);
+
+        using var writer = new StringWriter();
+        Console.SetOut(writer);
+
+        sut.IsUserInputLeapYear();
+
+        var output = writer.GetStringBuilder().ToString().TrimEnd();
+        output.Should().BeEquivalentTo("Please type a year after 1582.");
     }
 
     [Fact]
